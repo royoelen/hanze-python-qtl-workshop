@@ -30,7 +30,7 @@ Let us do a first run now
    (pqtl_env) $ python pyqtl_mapper.py --snp_file_location ${snp_loc} --probe_file_location ${probe_loc} --snp_positions_file_location ${snp_anno} --probe_positions_file_location ${probe_anno} --use_model linear --output_location ${result_loc} --cis_distance 10000 --cis True
 
 
-This could take a little while to run. If you are having some problems getting everything to run, or if your laptop is having a particularly hard time doing the computations, the results are also in the unconfined_mapping.tsv.gz file `here <https://drive.google.com/drive/u/1/folders/1eU1RI9GjH9IQBGPWFMGW_IBcvKado4rH>`_
+This could take a little while to run. If you are having some problems getting everything to run, or if your laptop is having a particularly hard time doing the computations, the results are also in the unconfined_mapping.tsv file `here <https://drive.google.com/drive/u/1/folders/1eU1RI9GjH9IQBGPWFMGW_IBcvKado4rH>`_
 
 There are some parameters that we glossed over. One is the cis distance. The cis distance defines what we think is 'close' to a gene (cis) and what we think is 'far' from a gene 'trans'. Another parameter is the cis parameter. This one tells the software to look at the cis or trans effects specifically. Here we chose cis. This combination of parameters means that we are looking at genetic effects within 10000 basepairs of each gene.
 
@@ -50,7 +50,7 @@ And add that confinement to our parameters
    (pqtl_env) $ python pyqtl_mapper.py --snp_file_location ${snp_loc} --probe_file_location ${probe_loc} --snp_positions_file_location ${snp_anno} --probe_positions_file_location ${probe_anno} --use_model linear --output_location ${result2_loc} --cis_distance 0 --cis True --confinements_snp_probe_pairs_location ${conf_loc}
 
 
-That should be quite a bit faster. Again, the results are also already available if you run into any computational issues in the confined_mapping.tsv.gz file `here <https://drive.google.com/drive/u/1/folders/1eU1RI9GjH9IQBGPWFMGW_IBcvKado4rH>`_
+That should be quite a bit faster. Again, the results are also already available if you run into any computational issues in the confined_mapping.tsv file `here <https://drive.google.com/drive/u/1/folders/1eU1RI9GjH9IQBGPWFMGW_IBcvKado4rH>`_
 
 When you look at these results, you should see that we have less entries that were tested, but they are mostly significant, owing to our decreased multiple testing burden.
 
