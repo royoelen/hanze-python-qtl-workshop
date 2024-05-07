@@ -33,3 +33,9 @@ html_theme = 'sphinx_rtd_theme'
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
+
+"""
+Tells the project the name of the home page.
+"""
+
+master_doc = 'index'
