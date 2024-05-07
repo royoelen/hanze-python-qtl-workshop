@@ -23,7 +23,7 @@ You can also use a venv or just your base Python install. Regardless, you will e
    (pqtl_env) $ pip install argparse numpy scikit-learn scipy pandas statsmodels
 
 
-Now get the eQTL mapping tool `here < https://github.com/royoelen/pyqtl_mapper/tree/master>`_ by either cloning it via git, or by downloading it as archive and unzipping it. 
+Now get the eQTL mapping tool `here <https://github.com/royoelen/pyqtl_mapper/tree/master>`_ by either cloning it via git, or by downloading it as archive and unzipping it. 
 Make note of where you placed the files on your machine. If you don't want to fill the full path every time, you can cd to that directory. We can test if the application runs, by using Python to call the main class.
 
 .. code-block:: console
@@ -60,7 +60,7 @@ In the output, a URL will be printed. For example mine was http://localhost:8887
 We can copy this URL into our browser to start working in Jupyter notebooks. Under Notebook, 'click Python3' to create a new notebook to work in.
 
 
-That should do it. Now let's take a look at the files we will need to do eQTL mapping
+That should do it. Now let's take a look at the files we will need to do eQTL mapping at :doc:`input_files`
 
 
 
