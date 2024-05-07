@@ -19,4 +19,4 @@ Now that you have done some eQTL mapping and looked at some effects in plots, tr
 5.  run the eQTL mapping tool again, using just the chromosome 1 inputs you generated
 
 
-When you feel like you have made an honest effort, you can check the code here: 
+When you feel like you have made an honest effort, you can check the code here: https://github.com/royoelen/hanze-python-qtl-workshop/blob/main/resources/hanze_master_eqtl_workshop_2023.ipynb

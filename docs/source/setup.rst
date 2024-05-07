@@ -10,8 +10,8 @@ We are going to need some Python libraries to be able to do our eQTL mapping. Th
 
 .. code-block:: console
 
-   (base) $ conda create -n pyqtl_env
-   (base) $ conda activate pqtl_env
+   (base) $ conda create -n pyqtl_env python=3.9
+   (base) $ conda activate pyqtl_env
    (base) $ conda install -n pyqtl_env pip
    (pqtl_env) $
 
@@ -20,7 +20,7 @@ You can also use a venv or just your base Python install. Regardless, you will e
 
 .. code-block:: console
 
-   (pqtl_env) $ pip install argparse numpy scikit-learn scipy pandas statsmodels
+   (pqtl_env) $ pip install argparse numpy scikit-learn==1.1.3 scipy pandas statsmodels
 
 
 Now get the eQTL mapping tool `here <https://github.com/royoelen/pyqtl_mapper/tree/master>`_ by either cloning it via git, or by downloading it as archive and unzipping it. 
@@ -59,6 +59,7 @@ Now we will test if the notebook will start. First in the terminal, start the se
 In the output, a URL will be printed. For example mine was http://localhost:8887/lab?token=376b4874f0c8e2398cfb0badcc6a941f5d95403502b3fd17
 We can copy this URL into our browser to start working in Jupyter notebooks. Under Notebook, 'click Python3' to create a new notebook to work in.
 
+We will need to free up our terminal for running the QTL tool though. Press CRTL+C to kill the jupyter server for now.
 
 That should do it. Now let's take a look at the files we will need to do eQTL mapping at :doc:`input_files`
 

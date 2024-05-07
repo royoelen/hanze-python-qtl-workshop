@@ -41,4 +41,4 @@ These genetic variants of course have a position on the genome. The file snp_loc
 
 
 
-Now that you have taken a look at the files, let us continue onto the actual eQTL mapping :doc:`qtl_mapping`
+Now that you have taken a look at the files, let us continue onto the actual eQTL mapping at :doc:`qtl_mapping`

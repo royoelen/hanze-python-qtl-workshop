@@ -82,4 +82,4 @@ Finally, we could plot those using seaborn
 
 That should be a snp-gene combination that looks like it is an actual effect. Now on your own, try to plot some more possible QTLs from the two output files you generated earlier.
 
-Now let us move onto the last part, where you try to solve some problems on your own :doc:`assignments`
+Now let us move onto the last part, where you try to solve some problems on your own here: :doc:`assignments`
