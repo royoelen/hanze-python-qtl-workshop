@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'hanze-eqtl-master'
+copyright = '2024, Oelen'
+author = 'royoelen'
 
 release = '0.1'
 version = '0.1.0'
@@ -33,3 +33,9 @@ html_theme = 'sphinx_rtd_theme'
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
+
+"""
+Tells the project the name of the home page.
+"""
+
+master_doc = 'index'

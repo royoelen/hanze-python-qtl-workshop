@@ -1,22 +1,7 @@
-Welcome to Lumache's documentation!
+Welcome the Hanze Master eQTL workshop
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+In this workshop we will be linking genetic variants to gene expression via so-called eQTL mapping. There are some `slides <https://drive.google.com/drive/u/1/folders/1eU1RI9GjH9IQBGPWFMGW_IBcvKado4rH>`_ on the concepts of QTL mapping, before you can get started on the actual analysis.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+First let us set up our environment to work in :doc:`setup`
 
-.. note::
-
-   This project is under active development.
-
-Contents
---------
-
-.. toctree::
-
-   usage
-   api
