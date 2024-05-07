@@ -38,3 +38,7 @@ Genotype annotations
 ------------
 
 These genetic variants of course have a position on the genome. The file snp_locations_CeD_adjusted27082018.txt shows for each variant in the genotype file, where it is located on the genome. This is required to decide on which effects are 'cis' and which are 'trans'
+
+
+
+Now that you have taken a look at the files, let us continue onto the actual eQTL mapping :doc:`qtl_mapping`

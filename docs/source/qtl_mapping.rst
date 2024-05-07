@@ -55,4 +55,4 @@ That should be quite a bit faster. Again, the results are also already available
 When you look at these results, you should see that we have less entries that were tested, but they are mostly significant, owing to our decreased multiple testing burden.
 
 
-Using a confinement can thus be very helpfull, but you will never find any new effects. Let us visualize eQTLs now.
+Using a confinement can thus be very helpfull, but you will never find any new effects. Let us visualize eQTLs: :doc:`qtl_visualization`
