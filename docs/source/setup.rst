@@ -6,7 +6,7 @@ Setup
 Installation
 ------------
 
-We are going to need some Python libraries to be able to do our eQTL mapping. The best way to do this, is by setting up a Conda environment, and installing the libraries there:
+We are going to need some Python libraries to be able to do our eQTL mapping. The best way to do this, is by setting up a `Conda <https://docs.anaconda.com/free/miniconda/>`_ environment, and installing the libraries there:
 
 .. code-block:: console
 
