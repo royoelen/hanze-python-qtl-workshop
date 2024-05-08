@@ -49,11 +49,11 @@ Let us install jupyter-lab
    (pqtl_env) $ pip install jupyterlab
 
 
-Now we will test if the notebook will start. First in the terminal, start the server on a specific port. The default port of 8787 is perfectly fine.
+Now we will test if the notebook will start. First in the terminal, start the server on a specific port. The default port of 8887 is perfectly fine.
 
 .. code-block:: console
 
-   (pqtl_env) $ jupyter-lab --no-browser --port=8887 # or some other port
+   (pqtl_env) $ jupyter-lab --no-browser --port=8887
 
 
 In the output, a URL will be printed. For example mine was http://localhost:8887/lab?token=376b4874f0c8e2398cfb0badcc6a941f5d95403502b3fd17
