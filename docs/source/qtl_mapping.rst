@@ -23,6 +23,7 @@ In bash we would do that like this
 While in the Windows Anaconda prompt we would do this
 
 .. code-block:: console
+   
    (pqtl_env) $ conda env config vars set snp_loc = 'C:\Users\royoelen\hanze-master\2021\CeD_genotypes_adjusted27082018.txt'
    (pqtl_env) $ conda env config vars set probe_loc = 'C:\Users\royoelen\hanze-master\2021\geuvadis_normalised_gene_expression_adjusted27082018.txt'
    (pqtl_env) $ conda env config vars set snp_anno = 'C:\Users\royoelen\hanze-master\2021\snp_locations_CeD_adjusted27082018.txt'
