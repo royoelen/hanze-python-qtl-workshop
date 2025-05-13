@@ -6,7 +6,7 @@ visualize eQTLs
 Plotting libraries
 ------------
 
-We'll need some extra libraries for making plots. In these examples we'll use seaborn. We can install these using pip
+We'll need some extra libraries for making plots. In these examples we'll use seaborn. We can install these using pip if we don't this yet.
 
 .. code-block:: console
 
@@ -18,7 +18,7 @@ We'll need some extra libraries for making plots. In these examples we'll use se
 Jupyter again
 ------------
 
-Let's now start Jupyter again so we can make and view our plots
+Let's now start Jupyter again so we can make and view our plots, or 
 
 .. code-block:: console
 
@@ -44,21 +44,36 @@ We also need to read the expression data. For now we can use Pandas. This might 
 
 .. code-block:: python
 
-    # read the genotype data
-    genotypes = pandas.read_table('/Users/royoelen/hanze-master/2021/CeD_genotypes_adjusted27082018.txt', sep='\t', index_col = 0)
-    # read the expression data
-    expression = pandas.read_table('/Users/royoelen/hanze-master/2021/geuvadis_normalised_gene_expression_adjusted27082018.txt', sep='\t', index_col = 0)
+    # the locations of our files
+    genotypes_loc = 'CeD_genotypes_adjusted27082018_chr22.txt'
+    expression_loc = 'geuvadis_normalised_gene_expression_adjusted27082018_chr22.txt'
+    # and let's load these
+    genotypes = pd.read_csv(genotypes_loc, sep = '\t', header = 0, index_col = 0)
+    expression = pd.read_csv(expression_loc, sep = '\t', header = 0, index_col = 0)
+
+
+Again, make sure we have data in both modalities
+
+.. code-block:: python
+
+    # get which samples are in both
+    samples_both = genotypes.columns.intersection(expression.columns)
+    # and subset in that order for both tables
+    genotypes_aligned = genotypes[samples_both]
+    expression_aligned = expression[samples_both]
+
 
 Based on the indices, we can extract the variant and the gene we are interested in from these two dataframes. These can then again be merged based on the donors (the column names)
 
 .. code-block:: python
 
     # extract the gene
-    expression_gene = expression.loc['ENSG00000179344']
+    expression_gene = expression_aligned.loc['ENSG00000161180']
     # extract the genotype
-    genotype_variant = genotypes.loc['rs9273493']
+    genotype_variant = genotypes_aligned.loc['rs7444']
     # combine into one dataframe
-    variant_to_gene = pandas.merge(genotype_variant, expression_gene, right_index = True, left_index = True)
+    variant_to_gene = pd.merge(genotype_variant, expression_gene, right_index = True, left_index = True)
+
 
 
 Finally, we could plot those using seaborn
@@ -69,17 +84,21 @@ Finally, we could plot those using seaborn
     f, ax = plt.subplots(figsize=(7, 6))
 
     # now create the plot
-    seaborn.boxplot(x="rs9273493", y="ENSG00000179344", data=variant_to_gene, whis=[0, 100], width=.6, palette="vlag")
+    sbs.boxplot(x="rs7444", y="ENSG00000161180", data=variant_to_gene,
+        whis=[0, 100], width=.6, palette="vlag")
 
     # Add in points to show each observation
-    seaborn.stripplot(x="rs9273493", y="ENSG00000179344", data=variant_to_gene, size=4, color=".3", linewidth=0)
+    sbs.stripplot(x="rs7444", y="ENSG00000161180", data=variant_to_gene,
+        size=4, color=".3", linewidth=0)
 
     # Tweak the visual presentation
     ax.xaxis.grid(True)
-    ax.set(ylabel="")
-    seaborn.despine(trim=True, left=True)
+    ax.set(ylabel="expression of ENSG00000161180")
+    ax.set(xlabel="rs7444 genotype")
+    sbs.despine(trim=True, left=True)
 
 
-That should be a snp-gene combination that looks like it is an actual effect. Now on your own, try to plot some more possible QTLs from the two output files you generated earlier.
+
+That should be a snp-gene combination that looks like it is an actual effect. Now on your own, try to plot some more possible QTLs from output you generated earlier.
 
 Now let us move onto the last part, where you try to solve some problems on your own here: :doc:`assignments`

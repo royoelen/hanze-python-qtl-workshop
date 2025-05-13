@@ -2,6 +2,18 @@ QTL mapping
 =====
 
 
+.. _jupyter:
+
+Jupyter
+------------
+
+Let's now start Jupyter  so we can make and view our plots, or use Google Colab
+
+.. code-block:: console
+
+   (pqtl_env) $ jupyter-lab --no-browser --port=8887 # or some other port
+
+
 .. _libraries:
 
 Libraries
@@ -112,53 +124,124 @@ That p-value is not going to impress anyone. Let's just try all combinations to 
    results_nowindow = pd.DataFrame(results, columns=['variant', 'feature', 'correlation', 'p_value'])
 
 
-.. code-block:: console
+Let us see if we found anything
 
-   (pqtl_env) $ python pyqtl_mapper.py --snp_file_location %snp_loc% --probe_file_location %probe_loc% --snp_positions_file_location %snp_anno% --probe_positions_file_location %probe_anno% --use_model linear --output_location %result_loc% --cis_distance 10000 --cis True
+.. code-block:: python
 
-
-This could take a little while to run. If you are having some problems getting everything to run, or if your laptop is having a particularly hard time doing the computations, the results are also in the unconfined_mapping.tsv file `here <https://drive.google.com/drive/u/1/folders/1eU1RI9GjH9IQBGPWFMGW_IBcvKado4rH>`_
-
-There are some parameters that we glossed over. One is the cis distance. The cis distance defines what we think is 'close' to a gene (cis) and what we think is 'far' from a gene 'trans'. Another parameter is the cis parameter. This one tells the software to look at the cis or trans effects specifically. Here we chose cis. This combination of parameters means that we are looking at genetic effects within 10000 basepairs of each gene.
-
-If you take a look at the results, you see that we have only one significant result. You can also see that a lot of variants are tested for the same gene. This is of course causing us having to deal with a very large multiple testing burden. Let us hypothesize that we have an idea of which variants mighf affect gene expression due to previous studies, and want to test only those. Selecting which snp-gene combinations to test a priori is called using a confinement. Let us use define and use a confinement file. We will also write to a new result file.
-
-Bash:
-
-.. code-block:: console
-
-   (pqtl_env) $ conf_loc='/Users/royoelen/hanze-master/2021/eqtls_eqtlgen_confinement.tsv'
-   (pqtl_env) $ result2_loc='/Users/royoelen/hanze-master/2021/pyqtl_results_eqtlgen.tsv'
+   results_nowindow[results_nowindow['p_value'] < 0.05]
 
 
-Windows Anaconda prompt:
+We have some significant associations, though what we did is not exactly fair. We did a lot of tests, so we should ideally correct for that.
 
-.. code-block:: console
+.. code-block:: python
 
-   (pqtl_env) $ conda env config vars set conf_loc = 'C:\Users\royoelen\hanze-master\2021\eqtls_eqtlgen_confinement.tsv'
-   (pqtl_env) $ conda env config vars set result2_loc = 'C:\Users\royoelen\hanze-master\2021\pyqtl_results_eqtlgen.tsv'
-   (pqtl_env) $ conda activate pyqtl_env
+   # get a bonferroni one
+   _, p_bonferroni, _, _ = multipletests(results_nowindow['p_value'], method='bonferroni')
+   results_nowindow['p_bonferroni'] = p_bonferroni
 
-
-And add that confinement to our parameters
-
-Bash:
-
-.. code-block:: console
-
-   (pqtl_env) $ python pyqtl_mapper.py --snp_file_location ${snp_loc} --probe_file_location ${probe_loc} --snp_positions_file_location ${snp_anno} --probe_positions_file_location ${probe_anno} --use_model linear --output_location ${result2_loc} --cis_distance 0 --cis True --confinements_snp_probe_pairs_location ${conf_loc}
+   # and BH
+   _, p_bh, _, _ = multipletests(results_nowindow['p_value'], method='fdr_bh')
+   results_nowindow['p_bh'] = p_bh
 
 
-Windows Anaconda prompt:
+Let us see how many are left with Bonferroni or BH
 
-.. code-block:: console
+.. code-block:: python
 
-   (pqtl_env) $ python pyqtl_mapper.py --snp_file_location %snp_loc% --probe_file_location %probe_loc% --snp_positions_file_location %snp_anno% --probe_positions_file_location %probe_anno% --use_model linear --output_location %result2_loc% --cis_distance 0 --cis True --confinements_snp_probe_pairs_location %conf_loc%
-
-
-That should be quite a bit faster. Again, the results are also already available if you run into any computational issues in the confined_mapping.tsv file `here <https://drive.google.com/drive/u/1/folders/1eU1RI9GjH9IQBGPWFMGW_IBcvKado4rH>`_
-
-When you look at these results, you should see that we have less entries that were tested, but they are mostly significant, owing to our decreased multiple testing burden.
+   results_nowindow[results_nowindow['p_bonferroni'] < 0.05]
+   results_nowindow[results_nowindow['p_bh'] < 0.05]
 
 
-Using a confinement can thus be very helpfull, but you will never find any new effects. Let us visualize eQTLs at :doc:`qtl_visualization`
+Previous studies have mapped eQTLs as well, so let us see what they found
+
+.. code-block:: python
+
+   # the location of this data
+   eqtlgen_confinement_loc = 'eqtlgen_fdr005_chr22.tsv.gz'
+   # read this data
+   eqtlgen_confinement = pd.read_csv(eqtlgen_confinement_loc, sep = '\t', header = 0)
+   # give it column names we like
+   # subset to just variant and feature
+   eqtlgen_confinement = eqtlgen_confinement[['SNP', 'Gene']]
+   # rename the columns to be the same as our output
+   eqtlgen_confinement = eqtlgen_confinement.rename({'SNP' : 'variant', 'Gene' : 'feature'}, axis = 1)
+   eqtlgen_confinement
+
+
+If we just wanted to replicate these findings, we would only test these, and only correct the number of tests for these:
+
+.. code-block:: python
+
+   # we already tested everything, so we can subset our results to what is in our confinement
+   results_eqtlgen = results_nowindow.merge(eqtlgen_confinement, on=['variant', 'feature'])
+   # if we would have only tried to replicate, we'd only have to correct for those
+   _, p_bonferroni_eqtlgen, _, _ = multipletests(results_eqtlgen['p_value'], method='bonferroni')
+   results_eqtlgen['p_bonferroni'] = p_bonferroni_eqtlgen
+   _, p_bh_eqtlgen, _, _ = multipletests(results_eqtlgen['p_value'], method='fdr_bh')
+   results_eqtlgen['p_bh'] = p_bh_eqtlgen
+   # let's see how many we would replicate then
+   results_eqtlgen
+   # which seems it is all of them (for this chromosome)
+
+
+Q: Can you think of a reason why subsetting the data post-hoc is not the greatest idea?
+Q: What is the major limitation of trying to replicate?
+
+To also reduce our multiple testing burden, we can also only test variants that are close to genes. We need that information though. Let us add this to the results for now.
+
+They look like this
+
+.. code-block:: python
+
+   variant_positions
+
+
+.. code-block:: python
+
+   gene_positions
+
+
+And adding it
+
+.. code-block:: python
+
+   # let's rename the columns to make them both unique and matching where needed
+   variant_positions = variant_positions.rename({'snpid' : 'variant', 'chr' : 'var_chr', 'pos' : 'var_pos'}, axis = 1)
+   gene_positions = gene_positions.rename({'geneid' : 'feature', 'chr' : 'feature_chr', 'left' : 'feature_start', 'right' : 'feature_end'}, axis = 1)
+
+   # and add them to the output
+   results_nowindow = results_nowindow.merge(variant_positions, how = 'left', on = 'variant')
+   results_nowindow = results_nowindow.merge(gene_positions, how = 'left', on = 'feature')
+
+   # and let's see what they look like
+   results_nowindow
+
+
+We can add the distances between variant and gene
+
+.. code-block:: python
+
+   # we can also test less, by looking at variants close to genes. let's see how far the variants are from the flanks of the genes
+   results_nowindow['variant_to_start'] = results_nowindow['feature_start'] - results_nowindow['var_pos']
+   results_nowindow['variant_to_end'] = results_nowindow['feature_end'] - results_nowindow['var_pos']
+   results_nowindow
+
+
+and subset the data to variants close to genes at 50k
+
+
+.. code-block:: python
+
+   # if we confine ourselves to variants at most 50k away from the gene, we should have lest tests
+   results_50kwindow = results_nowindow[((results_nowindow['variant_to_start'] > -50000) & (results_nowindow['variant_to_start'] < 50000)) | ((results_nowindow['variant_to_end'] > -50000) & (results_nowindow['variant_to_end'] < 50000))].copy()
+   # if we would have only tried in this window, we'd only have to correct for those
+   _, p_bonferroni_50k, _, _ = multipletests(results_50kwindow['p_value'], method='bonferroni')
+   results_50kwindow['p_bonferroni'] = p_bonferroni_50k
+   _, p_bh_50k, _, _ = multipletests(results_50kwindow['p_value'], method='fdr_bh')
+   results_50kwindow['p_bh'] = p_bh_50k
+   # so let's see what we have
+   results_50kwindow
+
+Q: what is the limitation of doint this?
+
+Let us next visualize eQTLs at :doc:`qtl_visualization`
