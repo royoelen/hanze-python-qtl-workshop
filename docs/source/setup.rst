@@ -8,6 +8,8 @@ Installation
 
 We are going to need some Python libraries to be able to do our eQTL mapping. The best way to do this, is by setting up a `Conda <https://docs.anaconda.com/free/miniconda/>`_ environment, and installing the libraries there:
 
+(Alternatively, you can skip this whole shebang and use Google Colab instead)
+
 .. code-block:: console
 
    (base) $ conda create -n pyqtl_env python=3.9
@@ -28,7 +30,7 @@ You can also use a venv or just your base Python install. Regardless, you will e
 Jupyter Notebook
 ------------
 
-For visualizing our results, it is convenient to have an IDE to work with. The examples here will use Jupyter Notebook. You are free to use a different IDE, but you will be on your own with regards to making this work.
+For visualizing our results, it is convenient to have an IDE (Interactive Development Environment) to work with. The examples here will use Jupyter Notebook. You are free to use a different IDE (like Google Colab), but you will be on your own with regards to making this work.
 
 Let us install jupyter-lab
 

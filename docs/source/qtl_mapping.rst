@@ -7,7 +7,7 @@ QTL mapping
 Jupyter
 ------------
 
-Let's now start Jupyter  so we can make and view our plots, or use Google Colab
+Let's now start Jupyter so we can make and view our plots, or alternatively, use Google Colab
 
 .. code-block:: console
 
@@ -36,7 +36,7 @@ QTLs are statistical associations. To do these, we'll need some libraries. We al
 Files colab
 -----------
 
-We can use Google Colab if we don't want to set up a Python environment ourselves. We will however need to upload the files there as well
+Like mentioned before, we can use Google Colab if we don't want to set up a Python environment ourselves. We will however need to upload the files there as well.
 
 .. code-block:: python
 
@@ -51,10 +51,10 @@ We can use Google Colab if we don't want to set up a Python environment ourselve
 Data loading
 ------------
 
-We have the files downloaded and we have the QTL mapping tool downloaded. Let us store the locations of these files into variables, so that we can reference them more easily.
-Let us also store the result file in a variable
+We have the files downloaded and we have the QTL mapping tool downloaded. Let us store the locations of these files into variables, so that we can reference them more easily. 
+Let us also store the results in a variables. 
 
-Let us set up the paths and load some data
+So we will set up the paths and load some data.
 
 .. code-block:: python
 
@@ -70,7 +70,7 @@ Let us set up the paths and load some data
    gene_positions = pd.read_csv(gene_positions_loc, sep = '\t', header = 0)
 
 
-When we associate the expression and genotype information, we need measurements in both modalities. Let us make sure that we have that
+When we associate the expression and genotype information, we need measurements in both modalities. Let us make sure that we have only matching data.
 
 .. code-block:: python
 
@@ -124,7 +124,7 @@ That p-value is not going to impress anyone. Let's just try all combinations to 
    results_nowindow = pd.DataFrame(results, columns=['variant', 'feature', 'correlation', 'p_value'])
 
 
-Let us see if we found anything
+Let us see if we found anything now.
 
 .. code-block:: python
 
@@ -152,6 +152,9 @@ Let us see how many are left with Bonferroni or BH
    results_nowindow[results_nowindow['p_bh'] < 0.05]
 
 
+Q: do you know of any other methods to account for multiple tests?
+
+
 Previous studies have mapped eQTLs as well, so let us see what they found
 
 .. code-block:: python
@@ -160,7 +163,6 @@ Previous studies have mapped eQTLs as well, so let us see what they found
    eqtlgen_confinement_loc = 'eqtlgen_fdr005_chr22.tsv.gz'
    # read this data
    eqtlgen_confinement = pd.read_csv(eqtlgen_confinement_loc, sep = '\t', header = 0)
-   # give it column names we like
    # subset to just variant and feature
    eqtlgen_confinement = eqtlgen_confinement[['SNP', 'Gene']]
    # rename the columns to be the same as our output
@@ -184,12 +186,13 @@ If we just wanted to replicate these findings, we would only test these, and onl
    # which seems it is all of them (for this chromosome)
 
 
-Q: Can you think of a reason why subsetting the data post-hoc is not the greatest idea?
+Q: Can you think of a reason why subsetting the full results to the ones we want to replicate post-hoc is not the greatest idea?
+
 Q: What is the major limitation of trying to replicate?
 
 To also reduce our multiple testing burden, we can also only test variants that are close to genes. We need that information though. Let us add this to the results for now.
 
-They look like this
+We can see what this information look like this
 
 .. code-block:: python
 
@@ -201,7 +204,7 @@ They look like this
    gene_positions
 
 
-And adding it
+And add this to our results
 
 .. code-block:: python
 
@@ -242,6 +245,6 @@ and subset the data to variants close to genes at 50k
    # so let's see what we have
    results_50kwindow
 
-Q: what is the limitation of doint this?
+Q: what is the limitation of doing this?
 
 Let us next visualize eQTLs at :doc:`qtl_visualization`

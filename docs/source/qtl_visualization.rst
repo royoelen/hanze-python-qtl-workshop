@@ -18,7 +18,7 @@ We'll need some extra libraries for making plots. In these examples we'll use se
 Jupyter again
 ------------
 
-Let's now start Jupyter again so we can make and view our plots, or 
+Let's now start Jupyter again so we can make and view our plots, or use Google Colab.
 
 .. code-block:: console
 
@@ -52,7 +52,7 @@ We also need to read the expression data. For now we can use Pandas. This might 
     expression = pd.read_csv(expression_loc, sep = '\t', header = 0, index_col = 0)
 
 
-Again, make sure we have data in both modalities
+Again, make sure we have data in both modalities.
 
 .. code-block:: python
 
@@ -63,7 +63,7 @@ Again, make sure we have data in both modalities
     expression_aligned = expression[samples_both]
 
 
-Based on the indices, we can extract the variant and the gene we are interested in from these two dataframes. These can then again be merged based on the donors (the column names)
+Based on the indices, we can extract the variant and the gene we are interested in from these two dataframes. These can then again be merged based on the donors (the column names).
 
 .. code-block:: python
 
@@ -76,7 +76,7 @@ Based on the indices, we can extract the variant and the gene we are interested 
 
 
 
-Finally, we could plot those using seaborn
+Finally, we could plot those using seaborn.
 
 .. code-block:: python
 
